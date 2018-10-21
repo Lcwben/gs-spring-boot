@@ -21,6 +21,7 @@ public class MqSenderServiceImpl implements MqSenderService, RabbitTemplate.Conf
     @Override
     public void send(String msg) {
         //amqpTemplate.convertAndSend("log.exchange", "log.queue1", msg);
+        this.rabbitTemplate.setConfirmCallback(this);
         RetryTemplate retryTemplate = new RetryTemplate();
         ExponentialBackOffPolicy backOffPolicy = new ExponentialBackOffPolicy();
         backOffPolicy.setInitialInterval(500);
@@ -35,6 +36,12 @@ public class MqSenderServiceImpl implements MqSenderService, RabbitTemplate.Conf
     @Override
     public void confirm(CorrelationData correlationData, boolean ack, String cause) {
 
-        System.out.println("msg ack:"+ack+" cause:"+cause);
+        System.out.println("Callback id:" + correlationData);
+        if (ack) {
+            System.out.println("Message comsume success!!!");
+        } else {
+            System.out.println("Message comsume fail:" + cause);
+        }
+
     }
 }
