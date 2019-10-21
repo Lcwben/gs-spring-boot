@@ -45,6 +45,13 @@
             <scope>true</scope>
         </dependency>
         <!-- end::hotfix support -->
+        <!-- tag::activemq -->
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-all</artifactId>
+            <version>5.14.4</version>
+        </dependency>
+        <!-- end::activemq -->
     </dependencies>
 
     <properties>
